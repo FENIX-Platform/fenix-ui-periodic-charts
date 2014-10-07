@@ -1,30 +1,22 @@
 require.config({
 
-    baseUrl: 'http://168.202.28.57:8080',
-
     paths: {
-        bootstrap: '//fenixapps.fao.org/repository/js/bootstrap/3.2/js/bootstrap.min',
-        chosen: '//fenixapps.fao.org/repository/js/chosen/1.0.0/chosen.jquery.min',
-        highcharts: '//fenixapps.fao.org/repository/js/highcharts/4.0.4/js/highcharts',
-        jquery: '//code.jquery.com/jquery-1.10.1.min',
-        mustache: '//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache',
-        'jquery.power.tip': '//fenixapps.fao.org/repository/js/jquery.power.tip/1.1.0/jquery.powertip.min',
-        'text': 'analysis/js/libs/text',
-        F3_CHART: 'analysis/js/libs/commons/f3-chart',
-        GHG_QA_QC: 'analysis/js/ghg-qa-qc/ghg-qa-qc',
-        GHG_OVERVIEW: 'analysis/js//ghg-overview/ghg-overview',
-        TILESMGR: 'analysis/js/tiles-manager/tiles-manager'
-
+        text:                       'libs/text',
+        i18n:                       'common/libs/i18n',
+        jquery:                     '//fenixapps.fao.org/repository/js/jquery/1.10.2/jquery-1.10.2.min',
+        mustache:                   '//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache',
+        highcharts:                 '//fenixapps.fao.org/repository/js/highcharts/4.0.4/js/highcharts',
+        highcharts_exporting:       '//fenixapps.fao.org/repository/js/highcharts/4.0.4/js/modules/exporting',
+        FENIX_UI_PERIODIC_CHARTS:   'fenix-ui-periodic-charts/fenix-ui-periodic-charts.js'
     },
 
     shim: {
-        bootstrap: ['jquery'],
-        chosen: ['jquery'],
-        highcharts: ['jquery'],
-        underscore: {
-            exports: '_'
+        highcharts: {
+            deps: ['jquery']
         },
-        'jquery.power.tip': ['jquery']
+        highcharts_exporting: {
+            deps: ['highcharts']
+        }
     }
 
 });
