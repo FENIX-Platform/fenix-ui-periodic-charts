@@ -18,6 +18,8 @@ define(['jquery',
         /* Extend default configuration. */
         this.CONFIG = $.extend(true, {}, this.CONFIG, config);
 
+        alert('welcome');
+
     };
 
     return new FENIX_UI_PERIODIC_CHARTS();

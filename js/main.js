@@ -7,7 +7,7 @@ require.config({
         mustache:                   '//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache',
         highcharts:                 '//fenixapps.fao.org/repository/js/highcharts/4.0.4/js/highcharts',
         highcharts_exporting:       '//fenixapps.fao.org/repository/js/highcharts/4.0.4/js/modules/exporting',
-        FENIX_UI_PERIODIC_CHARTS:   'fenix-ui-periodic-charts/fenix-ui-periodic-charts.js'
+        FENIX_UI_PERIODIC_CHARTS:   'fenix-ui-periodic-charts/fenix-ui-periodic-charts'
     },
 
     shim: {
@@ -21,6 +21,6 @@ require.config({
 
 });
 
-require(["TILESMGR"], function () {
-    TILESMGR().init()
+require(['FENIX_UI_PERIODIC_CHARTS'], function (FENIX_UI_PERIODIC_CHARTS) {
+    FENIX_UI_PERIODIC_CHARTS.init({});
 });
