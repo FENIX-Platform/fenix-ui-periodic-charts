@@ -68,5 +68,11 @@ require(['FENIX_UI_PERIODIC_CHARTS'], function (FENIX_UI_PERIODIC_CHARTS) {
         [Date.UTC(1982, 6, 30), 3.75],
         [Date.UTC(1982, 6, 31), 5.75]
     ]);
+    module.add_periodic_series('Period', [
+        [Date.UTC(1982, 6,  18), 3.19],
+        [Date.UTC(1982, 6,  19), 1.78],
+        [Date.UTC(1982, 6,  20), 4.47],
+        [Date.UTC(1982, 6,  21), 0.68]
+    ]);
     module.plot();
 });

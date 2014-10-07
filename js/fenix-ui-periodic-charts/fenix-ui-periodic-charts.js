@@ -13,6 +13,7 @@ define(['jquery',
             render_to: null,
             periodic_series_name: null,
             periodic_series_values: [],
+            periodic_series_period_type: 'day',
             time_series_name: null,
             time_series_values: [],
             default_colors: ['#379bcd', '#76BE94', '#744490', '#E10079', '#2D1706', '#F1E300', '#F7AE3C', '#DF3328']
@@ -26,9 +27,10 @@ define(['jquery',
 
     }
 
-    FENIX_UI_PERIODIC_CHARTS.prototype.add_periodic_series = function(name, values) {
+    FENIX_UI_PERIODIC_CHARTS.prototype.add_periodic_series = function(name, values, period_type) {
         this.CONFIG.periodic_series_values = values;
         this.CONFIG.periodic_series_name = name;
+        this.CONFIG.periodic_series_period_type = period_type;
     };
 
     FENIX_UI_PERIODIC_CHARTS.prototype.add_time_series = function(name, values) {
@@ -83,7 +85,57 @@ define(['jquery',
         series[1].setData(this.CONFIG.time_series_values);
         series[1].update({name: this.CONFIG.time_series_name}, true);
 
-        series[0].setData(this.CONFIG.periodic_series);
+        /* Add the periodic series to the chart. */
+        series[0].setData(this.create_periodic_series());
+//        series[0].setData(this.CONFIG.periodic_series_values);
+        series[0].update({name: this.CONFIG.periodic_series_name}, true);
+
+    };
+
+    FENIX_UI_PERIODIC_CHARTS.prototype.create_periodic_series = function() {
+
+        /* Initiate variables. */
+        var periodic_series = this.CONFIG.periodic_series_values;
+        var original_periodic_series = this.CONFIG.periodic_series_values;
+        var periodic_series_length = this.CONFIG.periodic_series_values.length;
+        var min_date = Date.UTC(3014, 11, 31);
+        var max_date = Date.UTC(0, 0, 1);
+
+        /* Find minimum and maximum dates. */
+        for (var i = 0 ; i < this.CONFIG.time_series_values.length ; i++) {
+            if (this.CONFIG.time_series_values[i][0] < min_date)
+                min_date = this.CONFIG.time_series_values[i][0];
+            if (this.CONFIG.time_series_values[i][0] > max_date)
+                max_date = this.CONFIG.time_series_values[i][0];
+        }
+
+        /* Create fake values backwards. */
+        var current_date = this.CONFIG.periodic_series_values[0][0];
+        var counter = 0;
+        current_date = new Date(current_date);
+        while (current_date > min_date) {
+            // TODO This is the function for the 'daily' data, implement other kind of steps
+            current_date.setDate(current_date.getDate() - 1);
+            var new_date = current_date.getTime();
+            var idx = this.CONFIG.periodic_series_values.length - 1 - counter++;
+            var new_value = this.CONFIG.periodic_series_values[idx][1];
+            if (counter == periodic_series_length)
+                counter = 0;
+            periodic_series.splice(0, 0, [new_date, new_value]);
+        }
+
+        /* Create fake values onwards. */
+        var current_date = this.CONFIG.periodic_series_values[this.CONFIG.periodic_series_values.length - 2][0];
+        var counter = 0;
+        current_date = new Date(current_date);
+        while (current_date < max_date) {
+            // TODO This is the function for the 'daily' data, implement other kind of steps
+            current_date.setDate(current_date.getDate() + 1);
+            periodic_series.push([current_date.getTime(), this.CONFIG.periodic_series_values[counter++][1]]);
+        }
+
+        /* Return the periodic series. */
+        return periodic_series;
 
     };
 
@@ -91,3 +143,5 @@ define(['jquery',
     return FENIX_UI_PERIODIC_CHARTS;
 
 });
+395712000000
+395625600000
