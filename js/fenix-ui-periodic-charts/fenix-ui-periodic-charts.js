@@ -135,6 +135,7 @@ define(['jquery',
         }
 
         /* Return the periodic series. */
+        // TODO This works only for pairs periods...
         return periodic_series;
 
     };
